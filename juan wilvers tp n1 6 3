@@ -5,52 +5,54 @@
  int otro_user;
   
  int main(){
- 	inicio:
-     printf("indique su edad: \n");
-  	  scanf("%f",&edad);
+ inicio:
+   printf("indique su edad: \n");
+   scanf("%f",&edad);
   	  
-		if(edad>=18){ 
+if(edad>=18){ 
   	  
-  	      printf(" oprima [1] si es hombre\n");
+ printf(" oprima [1] si es hombre\n");
 	     
-		  printf(" oprima [2] si es mujer\n");
+  printf(" oprima [2] si es mujer\n");
 	
-  	      scanf("%d",&sexo);
-			if(sexo==1){
-		 printf("indique su peso \n");
-  	     scanf("%f",&peso);
-  	     if(peso<150){
-  	     printf("sos un capo, pasa nomas master \n");
-			}
-		 else{
-		 printf("(error) a donde vas asesino de canelones");
-			}
+  scanf("%d",&sexo);
+     if(sexo==1){
+   printf("indique su peso \n");
+   scanf("%f",&peso);
+       if(peso<150){
+    printf("sos un capo, pasa nomas master \n");
+      }
+      else{
+   printf("(error) a donde vas asesino de canelones");
+     }
   	    	
-			}
-		 if(sexo==2){
+    }
+	
+    if(sexo==2){
 
-		 printf("indique su peso \n");
-		 scanf("%f",&peso);
+    printf("indique su peso \n");
+    scanf("%f",&peso);
 
-		 if(peso<100){
-	 	 printf("podes pasar\n");
-			}
-		 else{
-		 printf("no podes pasar, pero aca al lado estan haciendo cuestion de peso, capaz te va mejor. \n");
-			}
+       if(peso<100){
+    printf("podes pasar\n");
+	  }
+	 else{
+     printf("no podes pasar, pero aca al lado estan haciendo cuestion de peso, capaz te va mejor. \n");
+	}
 				
-			}
-         } else {
-         printf("no podes pasar, solo mayores. \n");
-         printf("desea ingresar otro usuario?\n");
-	     printf("{1} si \n");
-         printf("{2} no \n");
-         scanf("%d",&otro_user);
-	     if(otro_user==1){
-		 goto inicio;
-		 } else{
-			 return 0;
-		 }
-		 }
-		return 0;	
-		}
+	}
+    } else {
+      printf("no podes pasar, solo mayores. \n");
+      printf("desea ingresar otro usuario?\n");
+      printf("{1} si \n");
+      printf("{2} no \n");
+      scanf("%d",&otro_user);
+      
+    if(otro_user==1){
+      goto inicio;
+    } else{
+   return 0;
+   }
+   }
+   return 0;	
+  }
