@@ -1,11 +1,7 @@
 #include<stdio.h>
- float peso_h_max = 150;
- float peso_m_max = 100;
  float peso;
- int edad_entrada = 18;
  int sexo;
  float edad;
- int final;
  int otro_user;
   
  int main(){
@@ -13,75 +9,48 @@
      printf("indique su edad: \n");
   	  scanf("%f",&edad);
   	  
-		if(edad>edad_entrada){ 
+		if(edad>=18){ 
   	  
   	      printf(" oprima [1] si es hombre\n");
 	     
 		  printf(" oprima [2] si es mujer\n");
 	
   	      scanf("%d",&sexo);
-  	 
-  	      switch(sexo){
-  	      	case 1:{
-  	      		printf("indique su peso \n");
-  	      		scanf("%f",&peso);
-  	      		if(peso<peso_h_max){
-  	      			printf("sos un capo, pasa nomas master \n");
-					}
-			 	if(!(peso<peso)){
-			 	printf("(error) a donde vas asesino de canelones");	
-			 	}
-					break;
-				}
+			if(sexo==1){
+		 printf("indique su peso \n");
+  	     scanf("%f",&peso);
+  	     if(peso<150){
+  	     printf("sos un capo, pasa nomas master \n");
+			}
+		 else{
+		 printf("(error) a donde vas asesino de canelones");
+			}
+  	    	
+			}
+		 if(sexo==2){
+
+		 printf("indique su peso \n");
+		 scanf("%f",&peso);
+
+		 if(peso<100){
+	 	 printf("podes pasar\n");
+			}
+		 else{
+		 printf("no podes pasar, pero aca al lado estan haciendo cuestion de peso, capaz te va mejor. \n");
+			}
 				
-				 case 2:{
-				 	printf("indique su peso \n");
-				 	scanf("%f",&peso);
-				 	if(peso<peso_m_max){
-						printf("podes pasar\n");
-					}
-					if(!(peso<peso_m_max)){
-					 printf("no podes pasar \n");
-					}
-					break;
-				}
-			} 
-  	    } 
-  	    
-	 if(!(edad>edad_entrada)){
-	 	printf("no podes pasar, solo mayores. \n");
-	   printf("{1} darle plata\n");
-	   printf("{2} admitir la derrota\n");
-	   scanf("%d",&final);
-	   switch(final){
-	   	 case 1:{
-	   		 printf("final secreto, pudiste pasar\n");
-			 break;
-		   }
-	 	 case 2:{
-		     printf("volviste a casa.\n");
-		     break;
-	    	}
-	   }
-	
-	 }	
-	 printf("desea ingresar otro usuario?\n");
-	 printf("{1} si \n");
-	 printf("{2} no \n");
-	 scanf("%d",&otro_user);
-  	 
-  	      switch(otro_user){
-  	      	case 1:{
-  	      		goto inicio;
-			 	}
-					break;
-				
-				case 2:{
-				return 0;
-					}
-					break;
-					}
-				
-			
+			}
+         } else {
+         printf("no podes pasar, solo mayores. \n");
+         printf("desea ingresar otro usuario?\n");
+	     printf("{1} si \n");
+         printf("{2} no \n");
+         scanf("%d",&otro_user);
+	     if(otro_user==1){
+		 goto inicio;
+		 } else{
+			 return 0;
+		 }
+		 }
 		return 0;	
 		}
