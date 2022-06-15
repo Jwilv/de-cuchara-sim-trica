@@ -19,8 +19,8 @@ int luz ;
 int escVen = 3;
 int tiempo = 0;
 int periodo = 4000;
-int ambienteMax = ambienteMin + 4;
 int ambienteMin = 24;
+int ambienteMax = ambienteMin + 4;
 bool actuadores = true;
 int dia[10];
 int mes[10];
@@ -48,8 +48,8 @@ bool btnPress(int btn)
     btnAnterior[btn] = estado_actual;
     return estado;
 }
-void logEvento(String evento,){
-evenT(evento);
+void logEvento(String actual,){
+evenT(actual,evento);
 hora(day(),dia);
 hora(month(),mes);
 hora(year(),anio);
@@ -82,7 +82,7 @@ void hora(int dato, int evento[]){
   }
   evento[0] = dato;
 }
-void evenT(String event){
+void evenT(String event, int evento){
   for (int idx = 8;idx >= 0; idx--){
     String evento_actual = evento[idx];
     evento[idx+1] = evento_actual;
@@ -209,7 +209,7 @@ void printActuadores()
 {
     // mostrar bomba de abua, ventilador, intencidad luz del 0% al 100%
 }
-printMenu(){
+void printMenu(){
     Serial.println("Pantalla Menu:");
     Serial.println("-->Opción 1 - ajustar temperatura ambiente");
     Serial.println("-->Opción 2 - ajustar temperatura del agua");
@@ -262,7 +262,7 @@ void menuOp (int estado)
         if (btnPress(btnSalir)) menu = HOME;
     }
         break;
-    }
+    
     case LUCES:
     {   if(print){
         limpiarPantalla();
@@ -303,12 +303,18 @@ void menuOp (int estado)
         break;
     }
     }
+    if (est != estAnterior) {
+    print = true;
+  }
+  estAnterior = est;
+    }
+
 
 //////////////////////////////////////////////
 void loop ()
 {
 lectura(luz, MAX_INTENSIDAD, MIN_INTENTSIDAD, PIN_LUCES, HIGH, LOW);
-lectura(tempAmbiente, MAXIMO, MINIMO, PIN_VENTILADOR, LOW, HIGH);
-lectura(tempAgua, MAXIMO, MINIMO, PIN_BOMBA_AGUA, LOW, HIGH);
+lectura(tempAmbiente, ambienteMax, ambienteMin, PIN_VENTILADOR, LOW, HIGH);
+lectura(tempAgua, aguaMax, aguaMin, PIN_BOMBA_AGUA, LOW, HIGH);
 menuOp(est);
 }
