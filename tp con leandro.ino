@@ -11,18 +11,16 @@ RTC_DS1307 rtc;
 #define PIN_BOMBA_AGUA 13
 ///////////////////////////////////////////////////
 /* LED CONSTANTES*/
-#define MAX_INTENSIDAD 70
-#define MIN_INTENTSIDAD 50
 #define MINIMO 0
-#define MAXIMO 60
+#define MAXIMO 100
 int aguaMin = 23;
-int aguaMax = 26;
-int luz = 50;
-int escVen = 1;
+int aguaMax = aguaMin + 3;
+int luz ;
+int escVen = 3;
 int tiempo = 0;
 int periodo = 4000;
-int tempAmbiente = 25;
-int tempAgua = 25;
+int ambienteMax = ambienteMin + 4;
+int ambienteMin = 24;
 bool actuadores = true;
 int dia[10];
 int mes[10];
@@ -31,8 +29,10 @@ int hora[10];
 int minuto[10];
 int segundo[10];
 string evento [10];
-int luz_max = 23;
-int luz_min = luz_max + 3;
+int luz_max = luz_min + 3;
+int luz_min = 20;
+int tempAmbiente ;
+int tempAgua;
 ///////////////////////
 int pulsadores[4] = {BTN_MENU, BTN_SALIR, BTN_INCREMENTAR, BTN_DECREMENTAR};
 int leds[3] = {PIN_LUCES, PIN_VENTILADOR, PIN_BOMBA_AGUA};
@@ -127,38 +127,74 @@ void setup()
     Serial.begin(9600);
     delacracionPines();
 }
-void luces()
-{   if(print){
+void lucesPrint(){
+    if(print){
     Serial.println("ESTADO_OPCION_3-->");
           Serial.print("MAX:");
           Serial.println(luz_max);
           Serial.print("MIN:");
           Serial.println(luz_min);
+          print = false;
 }
+}
+void luces()
+{   
     if (btnPress(btnMenu)) menu = LOG_EVENTOS;
     if (btnPress(btnSalir)) menu = HOME;
-    if (btnPress(btnDecrementar)) luz -= valorLuz;
-    if (btnPress(btnIncrementar)) luz += valorLuz;
-    if (luz > MAX_INTENSIDAD) luz = MAX_INTENSIDAD;
-    if (luz < MIN_INTENTSIDAD) luz = MIN_INTENTSIDAD;
+    if (btnPress(btnDecrementar)){
+        luz_min--;
+        print = true;
+      }
+    if (btnPress(btnIncrementar)){
+        luz_min++;
+        print = true;
+      }
+    }
+void ventiladorPrint(){
+    if(print){
+    Serial.println("ESTADO_OPCION_1-->");
+          Serial.print("MAX:");
+          Serial.println(ambienteMax);
+          Serial.print("MIN:");
+          Serial.println(ambienteMin);
+          print = false;
+}
 }
 void ventilador()
 {
     if (btnPress(btnMenu)) menu = BOMBA_AGUA;
     if (btnPress(btnSalir)) menu = HOME;
-    if (btnPress(btnDecrementar)) tempAmbiente -= escVen;
-    if (btnPress(btnIncrementar)) tempAmbiente += escVen;
-    if (tempAmbiente > MAXIMO) tempAmbiente = MAXIMO;
-    if (tempAmbiente < MINIMO) tempAmbiente = MINIMO;
+    if (btnPress(btnDecrementar)){
+        print = true;
+        ambienteMin--;
+    }
+    if (btnPress(btnIncrementar)){
+        print = true;
+        ambienteMin++;
+    }
+}
+void bombaAguaPrint(){
+    if(print){
+    Serial.println("ESTADO_OPCION_2-->");
+          Serial.print("MAX:");
+          Serial.println(aguaMax);
+          Serial.print("MIN:");
+          Serial.println(aguaMin);
+          print = false;
+}
 }
 void bombaAgua()
 {
     if (btnPress(btnMenu)) menu = LUCES;
     if (btnPress(btnSalir)) menu = HOME;
-    if (btnPress(btnDecrementar)) tempAgua -= escVen;
-    if (btnPress(btnIncrementar)) tempAgua += escVen;
-    if (tempAgua > MAXIMO) tempAgua = MAXIMO;
-    if (tempAgua < MINIMO) tempAgua = MINIMO;
+    if (btnPress(btnDecrementar)){
+        print = true;
+        aguaMin--;
+    }
+    if (btnPress(btnIncrementar)){
+        print = true;
+        aguaMin++;
+    }
 }
 
 void limpiarPantalla()
@@ -228,25 +264,41 @@ void menuOp (int estado)
         break;
     }
     case LUCES:
-    {
+    {   if(print){
+        limpiarPantalla();
+        lucesPrint();
+        print = false;
+        }
        // logEvento("luces");
-        luces(); // mostrar lo mismo pero indicando lugar y opcion para modificar parametros
+        luces();
         break;
     }
     case VENTILADOR:
     {
+        if(print){
+        limpiarPantalla();
+        ventiladorPrint();
+        print = false;
+        }
        // logevento("VENTILADOR");
         ventilador();
         break;
     }
     case BOMBA_AGUA:
-    {
+    {   if(print){
+        limpiarPantalla();
+        bombaAguaPrint();
+        print = false;
+        }
        // logEvento("BOMBA AGUA");
         bombaAgua();
         break;
     }
     case LOG_EVENTOS:
-    {
+    {   if(print){
+        printEventos();
+        print = false;
+        }
         printEventos();
         break;
     }
