@@ -29,8 +29,8 @@ int hora[10];
 int minuto[10];
 int segundo[10];
 string evento [10];
-int luz_max = luz_min + 3;
 int luz_min = 20;
+int luz_max = luz_min + 3;
 int tempAmbiente ;
 int tempAgua;
 ///////////////////////
